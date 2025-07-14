@@ -1,0 +1,14 @@
+public class Var{
+  public static void main(String[] args){
+    int amma=21;
+    String nana="hi nana";
+    boolean sheshi=true;
+    char anish='A';
+    float smitha=9.91f;
+    System.out.println(amma);
+    System.out.println(nana);
+    System.out.println(sheshi);
+    System.out.println(anish);
+    System.out.println(smitha);
+  }
+}
