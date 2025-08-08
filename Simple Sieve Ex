@@ -1,0 +1,83 @@
+# Step-by-step run of the Sieve for **n = 30**
+
+I’ll show what the `prime[]` array (candidates) looks like at each outer-loop step. For each step I list the **multiples we mark false** and the **numbers still marked true** (i.e. still candidates) after that step.
+
+---
+
+### Initialization
+
+* Code creates `prime[0..30]` and sets **all** entries to `true`.
+* **Candidates (2..30)** initially:
+  `2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30`
+
+> (Note: the code doesn't explicitly set `prime[0]` and `prime[1]` to `false`, but they are ignored because printing starts at 2.)
+
+---
+
+### Outer-loop iteration: `p = 2`
+
+* Condition: `p*p = 4 ≤ 30` and `prime[2] == true` → process `p = 2`.
+* **Mark false** multiples starting at `p*p = 4`:
+  `4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30`
+* **Candidates (still true) after p=2:**
+  `2, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29`
+
+---
+
+### Outer-loop iteration: `p = 3`
+
+* Condition: `p*p = 9 ≤ 30` and `prime[3] == true` → process `p = 3`.
+* **Mark false** multiples starting at `9`:
+  `9, 12, 15, 18, 21, 24, 27, 30`
+  (some — 12,18,24,30 — were already false from `p=2`)
+* **Candidates after p=3:**
+  `2, 3, 5, 7, 11, 13, 17, 19, 23, 25, 29`
+
+---
+
+### Outer-loop iteration: `p = 4`
+
+* Condition: `p*p = 16 ≤ 30`, but **`prime[4] == false`** (it was crossed out by `p=2`), so we **skip** processing `p = 4`.
+* **Candidates unchanged:**
+  `2, 3, 5, 7, 11, 13, 17, 19, 23, 25, 29`
+
+---
+
+### Outer-loop iteration: `p = 5`
+
+* Condition: `p*p = 25 ≤ 30` and `prime[5] == true` → process `p = 5`.
+* **Mark false** multiples starting at `25`:
+  `25, 30`  (30 was already false)
+* **Candidates after p=5:**
+  `2, 3, 5, 7, 11, 13, 17, 19, 23, 29`
+
+---
+
+### Next `p = 6`
+
+* Now `p*p = 36 > 30`, so the outer loop stops.
+
+---
+
+## Final result (what the program prints)
+
+Primes ≤ 30:
+**`2 3 5 7 11 13 17 19 23 29`**
+
+## Final `prime[]` status (0..30) — T = true, F = false
+
+```
+0:T  1:T  2:T  3:T  4:F  5:T  6:F  7:T  8:F  9:F
+10:F 11:T 12:F 13:T 14:F 15:F 16:F 17:T 18:F 19:T
+20:F 21:F 22:F 23:T 24:F 25:F 26:F 27:F 28:F 29:T 30:F
+```
+
+(Again: 0 and 1 remain `T` because the code never changed them; they’re simply ignored by the printing loop which starts at 2.)
+
+---
+
+### Short recap — *why* we start at `p*p`
+
+For each prime `p`, you start marking from `p*p` because any composite less than `p*p` has a smaller prime factor and was already marked by that smaller prime. That’s why the sieve is efficient.
+
+Want a visual with the numbers crossed out step-by-step (ASCII art), or do you want the same run for a bigger `n` so you can see the pattern? 😊
